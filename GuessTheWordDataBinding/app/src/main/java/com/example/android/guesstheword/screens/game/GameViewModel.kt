@@ -31,18 +31,24 @@ class GameViewModel : ViewModel() {
 
     // current word
     private val _word = MutableLiveData<String>()
-    val word: LiveData<String>
-        get() = _word
+    val word: LiveData<String> get() = _word
+    val wordHint = Transformations.map(word) { word ->
+
+        // get random index
+        val randomPosition = (1..word.length).random()
+
+        // return formatted string
+        "Current word has " + word.length + " letters" +
+                "\nThe letter at position " + randomPosition + " is " + word.get(randomPosition - 1).toUpperCase()
+    }
 
     // current score
     private val _score = MutableLiveData<Int>()
-    val score: LiveData<Int>
-        get() = _score
+    val score: LiveData<Int> get() = _score
 
     // event: game over
     private val _eventGameFinish = MutableLiveData<Boolean>()
-    val eventGameFinish: LiveData<Boolean>
-        get() = _eventGameFinish
+    val eventGameFinish: LiveData<Boolean> get() = _eventGameFinish
 
     // countdown timer
     private val _currentTime = MutableLiveData<Long>()
